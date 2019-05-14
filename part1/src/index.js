@@ -10,11 +10,11 @@ const Button = ({ text, handleClick }) => {
 const App = (props) => {
   const [selected, setSelected] = useState(0)
   const setRandomAnecdote = () => {
-
+    setSelected(Math.floor(Math.random()*anecdotes.length))
   }
   return (
     <div>
-      {props.anecdotes[selected]}
+      <div>{props.anecdotes[selected]}</div>
       <Button text="next anecdote" handleClick={() => setRandomAnecdote()} />
     </div>
   )
