@@ -1,12 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Course from './components/Course'
-
-const Total = (props) => {
-  return (
-    <p>yhteensä {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises} tehtävää</p>
-  )
-}
+import Total from './components/Total'
 
 const App = () => {
   const course = {
@@ -26,11 +21,12 @@ const App = () => {
       }
     ]
   }
-
+  const total = course.parts.map( part => part.exercises ).reduce( (sum, part) => sum + part )
 
   return (
     <div>
       <Course course={course} />
+      <Total total={total} />
     </div>
   )
 }
