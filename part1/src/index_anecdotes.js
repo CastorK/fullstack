@@ -9,13 +9,31 @@ const Button = ({ text, handleClick }) => {
 
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [score, setScore] = useState([0,0,0,0,0,0])
+  let max = score.indexOf(Math.max(...score));
   const setRandomAnecdote = () => {
-
+    let rand = Math.floor(Math.random()*anecdotes.length)
+    while(rand === selected) {
+      rand = Math.floor(Math.random()*anecdotes.length)
+    }
+    setSelected(rand)
+  }
+  const vote = () => {
+    const newScore = [...score]
+    newScore[selected] += 1
+    setScore(newScore)
+    max = score.indexOf(Math.max(...score));
   }
   return (
     <div>
-      {props.anecdotes[selected]}
+      <h1>Anecdote of the day</h1>
+      <div>{props.anecdotes[selected]}</div>
+      <div>Has {score[selected]} points</div>
       <Button text="next anecdote" handleClick={() => setRandomAnecdote()} />
+      <Button text="vote" handleClick={() => vote()} />
+      <h1>Anecdote with most votes</h1>
+      <div>{props.anecdotes[max]}</div>
+      <div>Has {score[max]} points</div>
     </div>
   )
 }
