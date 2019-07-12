@@ -1,16 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FilterBlock from './components/FilterBlock'
 import AddBlock from './components/AddBlock'
 import NumberBlock from './components/NumberBlock'
+import phonebookService from './services/phonebookService'
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { id: 0, name: 'Arto Hellas', number: '045-123456' },
-    { id: 1, name: 'Martti Tienari', number: '040-123456' },
-    { id: 2, name: 'Arto Järvinen', number: '040-123456' },
-    { id: 3, name: 'Lea Kutvonen', number: '040-123456' }
-  ]) 
+  const [ persons, setPersons] = useState([])
   const [ filteredPersons, setFilteredPersons ] = useState(persons)
+
+  const setPersonsAndFilteredPersons = (data) => {
+    setPersons(data)
+    setFilteredPersons(data)
+  }
+
+  const removePerson = id => {
+    setPersons(persons.filter(p => p.id !== id))
+    setFilteredPersons(persons.filter(p => p.id !== id))
+  }
+
+  useEffect(() => {
+    phonebookService.getAllPersons()
+      .then( allPersons => {
+        setPersonsAndFilteredPersons(allPersons)
+      })
+  }, [])
 
   return (
     <div>
@@ -20,7 +33,7 @@ const App = () => {
 
       <AddBlock persons={persons} setPersons={setPersons} setFilteredPersons={setFilteredPersons}/>
 
-      <NumberBlock filteredPersons={filteredPersons} />
+      <NumberBlock filteredPersons={filteredPersons} removePerson={removePerson}/>
     </div>
   )
 }

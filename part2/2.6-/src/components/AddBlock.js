@@ -1,30 +1,42 @@
 import React, {useState} from 'react'
+import phonebookService from '../services/phonebookService'
 
 const AddBlock = (props) => {
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber ] = useState('')
 
-    const handleNameChange = (event) => {
-        setNewName(event.target.value)
+    const handleNameChange = (event) => setNewName(event.target.value)
+    const handleNumberChange = (event) => setNewNumber(event.target.value)
+    
+    const setPersonsAndFilteredPersons = (data) => {
+        props.setPersons(data)
+        props.setFilteredPersons(data)
     }
-    const handleNumberChange = (event) => {
-        setNewNumber(event.target.value)
+    
+    const handleChange = (newPersons) => {
+        setPersonsAndFilteredPersons(newPersons)
+        setNewName('')
+        setNewNumber('')
     }
+
     const addPerson = (event) => {
         event.preventDefault()
         const newPerson = {
-            id: props.persons.length,
             'name': newName,
             'number': newNumber
         }
         if (props.persons.some(person => person.name === newPerson.name)) {
-            alert(`${newPerson.name} on jo luettelossa`)
+            const confirmMsg = `${newPerson.name} is already added to phonebook. Do you want to replace the old number with ${newPerson.number}?`
+            if (window.confirm(confirmMsg)) {
+                const existingPerson = props.persons.find(p => p.name === newPerson.name)
+                phonebookService
+                    .updatePerson({...existingPerson, name:newPerson.name, number:newPerson.number })
+                    .then( data => handleChange(props.persons.map( p => p.id !== data.id ? p : data )) )
+            }
         } else {
-            const newPersons = props.persons.concat(newPerson)
-            props.setPersons(newPersons)
-            props.setFilteredPersons(newPersons)
-            setNewName('')
-            setNewNumber('')
+            phonebookService
+            .addPerson(newPerson)
+            .then( response => handleChange(props.persons.concat(response)) )
         }
     }
     return (

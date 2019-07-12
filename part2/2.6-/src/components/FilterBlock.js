@@ -11,7 +11,7 @@ const FilterBlock = ({persons, setFilteredPersons}) => {
     return (
         <div>
             <h3>Rajaa näytettäviä</h3>
-            <input onChange={handleFilterChange} />
+            <input value={filterStr} onChange={handleFilterChange} />
         </div>
     )
 }
