@@ -8,7 +8,7 @@ import phonebookService from './services/phonebookService'
 const App = () => {
   const [ persons, setPersons] = useState([])
   const [ filteredPersons, setFilteredPersons ] = useState(persons)
-  const [ notificationMessage, setNotificationMessage ] = useState("")
+  const [ notification, setNotification ] = useState({'msg': '', 'type': ''})
 
   const setPersonsAndFilteredPersons = (data) => {
     setPersons(data)
@@ -20,10 +20,10 @@ const App = () => {
     setFilteredPersons(persons.filter(p => p.id !== id))
   }
 
-  const showNotification = msg => {
-    setNotificationMessage(msg)
+  const showNotification = (msg, type) => {
+    setNotification({'msg': msg, 'type': type})
     setTimeout(() => {
-      setNotificationMessage('')
+      setNotification({'msg': '', 'type': ''})
     }, 3000)
   }
 
@@ -38,13 +38,13 @@ const App = () => {
     <div>
       <h2>Puhelinluettelo</h2>
 
-      <Notification msg={notificationMessage}/>
+      <Notification notification={notification}/>
 
       <FilterBlock persons={persons} setFilteredPersons={setFilteredPersons} />
 
       <AddBlock persons={persons} setPersonsAndFilteredPersons={setPersonsAndFilteredPersons} showNotification={showNotification}/>
 
-      <NumberBlock filteredPersons={filteredPersons} removePerson={removePerson}/>
+      <NumberBlock filteredPersons={filteredPersons} removePerson={removePerson} showNotification={showNotification}/>
     </div>
   )
 }

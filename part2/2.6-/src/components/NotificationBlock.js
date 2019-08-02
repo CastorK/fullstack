@@ -1,12 +1,11 @@
 import React from 'react'
 
-const Notification = ({msg}) => {
-  if ( !msg ) {
+const Notification = ({notification}) => {
+  if ( !notification.msg ) {
     return null
   }
 
   const notificationStyle = {
-    color: 'green',
     background: 'lightgrey',
     fontSize: 20,
     borderStyle: 'solid',
@@ -14,9 +13,14 @@ const Notification = ({msg}) => {
     padding: 10,
     marginBottom: 10
   }
+  switch (notification.type) {
+    case 'success': notificationStyle.color = 'green'; break;
+    case 'fail': notificationStyle.color = 'red'; break;
+    default: notificationStyle.color = 'blue'; break;
+  }
 
   return (
-    <div style={notificationStyle} className="notification">{ msg }</div>
+    <div style={notificationStyle} className="notification">{ notification.msg }</div>
   )
 }
 

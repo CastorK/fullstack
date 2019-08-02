@@ -10,7 +10,7 @@ const AddBlock = (props) => {
     
     const handleChange = (newPersons, added) => {
         props.setPersonsAndFilteredPersons(newPersons)
-        props.showNotification( added ? `Added ${newName}` : `Updated ${newName}`)
+        props.showNotification( added ? `Added ${newName}` : `Updated ${newName}`, 'success')
         setNewName('')
         setNewNumber('')
     }
@@ -28,6 +28,7 @@ const AddBlock = (props) => {
                 phonebookService
                     .updatePerson({...existingPerson, name:newPerson.name, number:newPerson.number })
                     .then( data => handleChange(props.persons.map( p => p.id !== data.id ? p : data, false)) )
+                    .catch( props.showNotification(`Person ${newPerson.name} not found!`, 'fail') )
             }
         } else {
             phonebookService
@@ -36,6 +37,7 @@ const AddBlock = (props) => {
                     const newPersons = props.persons.concat(response)
                     handleChange(newPersons, true) 
                 })
+                .catch(props.showNotification(`Adding ${newPerson.name} failed!`, 'fail'))
         }
     }
 
