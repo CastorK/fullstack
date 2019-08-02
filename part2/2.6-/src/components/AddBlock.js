@@ -8,13 +8,9 @@ const AddBlock = (props) => {
     const handleNameChange = (event) => setNewName(event.target.value)
     const handleNumberChange = (event) => setNewNumber(event.target.value)
     
-    const setPersonsAndFilteredPersons = (data) => {
-        props.setPersons(data)
-        props.setFilteredPersons(data)
-    }
-    
-    const handleChange = (newPersons) => {
-        setPersonsAndFilteredPersons(newPersons)
+    const handleChange = (newPersons, added) => {
+        props.setPersonsAndFilteredPersons(newPersons)
+        props.showNotification( added ? `Added ${newName}` : `Updated ${newName}`)
         setNewName('')
         setNewNumber('')
     }
@@ -31,14 +27,18 @@ const AddBlock = (props) => {
                 const existingPerson = props.persons.find(p => p.name === newPerson.name)
                 phonebookService
                     .updatePerson({...existingPerson, name:newPerson.name, number:newPerson.number })
-                    .then( data => handleChange(props.persons.map( p => p.id !== data.id ? p : data )) )
+                    .then( data => handleChange(props.persons.map( p => p.id !== data.id ? p : data, false)) )
             }
         } else {
             phonebookService
-            .addPerson(newPerson)
-            .then( response => handleChange(props.persons.concat(response)) )
+                .addPerson(newPerson)
+                .then( response => {
+                    const newPersons = props.persons.concat(response)
+                    handleChange(newPersons, true) 
+                })
         }
     }
+
     return (
         <div>
             <h3>Lisää uusi</h3>
