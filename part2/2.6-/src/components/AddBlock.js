@@ -37,7 +37,9 @@ const AddBlock = (props) => {
                     const newPersons = props.persons.concat(response)
                     handleChange(newPersons, true) 
                 })
-                .catch(props.showNotification(`Adding ${newPerson.name} failed!`, 'fail'))
+                .catch( error => {
+                    props.showNotification(`${error.response.data.error}`, 'fail')
+                })
         }
     }
 
