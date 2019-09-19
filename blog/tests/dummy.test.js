@@ -121,3 +121,21 @@ describe('Most blogs', () => {
         expect(result).toEqual({'author': 'Robert C. Martin', 'blogs': 3})
     })
 })
+
+// MOST LIKES TEST
+describe('Most likes', () => {
+    test('of empty list is empty object', () => {
+        const result = listHelper.mostLikes([])
+        expect(result).toEqual({})
+    })
+
+    test('of list with one blog is that blog', () => {
+        const result = listHelper.mostLikes(listWithOneBlog)
+        expect(result).toEqual({'author': 'Edsger W. Dijkstra', 'likes': 5})
+    })
+
+    test('of list with many blogs is correct', () => {
+        const result = listHelper.mostLikes(listWithManyBlogs)
+        expect(result).toEqual({'author': 'Edsger W. Dijkstra', 'likes': 17})
+    })
+})
