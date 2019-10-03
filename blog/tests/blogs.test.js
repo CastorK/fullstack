@@ -87,6 +87,33 @@ test('New blog without author fails', async () => {
     await api.post('/api/blogs').send(blogToBeSaved).expect(400)
 })
 
+describe('Deleting blog', () => {
+    test('with valid id removes the blog', async () => {
+        let response = await api.get('/api/blogs')
+        const initialBlogsInDb = response.body
+        const blogToBeDeleted = initialBlogsInDb[0]
+        await api.delete(`/api/blogs/${blogToBeDeleted.id}`).expect(204)
+        response = await api.get('/api/blogs')
+        expect(response.body.length).toBe(initialBlogsInDb.length - 1)
+    })
+    test('with invalid id fails', async () => {
+        let response = await api.get('/api/blogs')
+        const initialBlogsInDb = response.body
+        await api.delete(`/api/blogs/0`).expect(400)
+        response = await api.get('/api/blogs')
+        expect(response.body.length).toBe(initialBlogsInDb.length)
+    })
+})
+
+describe('Modying blog', () => {
+    test('with valid data works', async () => {
+        let response = await api.get('/api/blogs')
+        const blogToBeModified = response.body[0]
+        response = await api.put(`/api/blogs/${blogToBeModified.id}`).send({likes: 1000})
+        expect(response.body.likes).toBe(1000)
+    })
+})
+
 afterAll(() => {
     mongoose.connection.close()
 })
