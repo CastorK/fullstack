@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
 import BlogService from '../services/blogs'
 
-const CreateBlog = ({addBlog}) => {
+const CreateBlog = ({addBlog, showNotification}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(`Creating ${title} by ${author} at ${url}`)
 
-        const newBlog = await BlogService.createBlog({'title': title, 'author': author, 'url': url})
-        setTitle('')
-        setAuthor('')
-        setUrl('')
-        addBlog(newBlog)
+        try {
+            const newBlog = await BlogService.createBlog({'title': title, 'author': author, 'url': url})
+            setTitle('')
+            setAuthor('')
+            setUrl('')
+            addBlog(newBlog)
+            showNotification(`Successfully added ${title} (${url}) by ${author}`, 'success')
+        } catch (error) {
+            showNotification(`Adding ${title} failed. ${error}`, 'fail')
+        }
     }
 
     return (
