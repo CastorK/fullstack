@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import Loginform from './components/Loginform'
 import blogService from './services/blogs'
+import Blog from './components/Blog'
 
 
 function App() {
@@ -20,8 +21,17 @@ function App() {
 
   return (
     <div>
-      {user === null ? <Loginform setUser={setUser}/> : <div>{ user.name }</div>}
-      {blogs.map( x => <div key={x.id}>{x.title}</div>)}
+      <div>
+        <h1>Welcome to Bloggagram</h1>
+      </div>
+      {
+        user === null
+        ? <Loginform setUser={setUser}/> 
+        : <div>
+            <h3>Logged in as { user.username }</h3>
+            {blogs.map( b => <Blog key={b.id} blog={b} /> )}
+          </div>
+      }
     </div>
   );
 }

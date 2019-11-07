@@ -6,6 +6,7 @@ const Loginform = ({setUser}) => {
     const [password, setPassword] = useState('')
 
     const handleLogin = async (event) => {
+        event.preventDefault()
         try {
             const user = await loginService.login({'username': username, 'password': password})
             window.localStorage.setItem('blogUser', JSON.stringify(user))
@@ -22,17 +23,20 @@ const Loginform = ({setUser}) => {
     }
 
     return (
-        <form onSubmit={handleLogin}>
-            <div>
-                Username
-                <input type="text" value={username} name="username" onChange={({ target }) => setUsername(target.value)} />
-            </div>
-            <div>
-                Password
-                <input type="password" value={password} name="password" onChange={({ target }) => setPassword(target.value)} />
-            </div>
-            <button type="submit">Login</button>
-        </form>
+        <div>
+            <h3>Login</h3>
+            <form onSubmit={handleLogin}>
+                <div>
+                    Username
+                    <input type="text" value={username} name="username" onChange={({ target }) => setUsername(target.value)} />
+                </div>
+                <div>
+                    Password
+                    <input type="password" value={password} name="password" onChange={({ target }) => setPassword(target.value)} />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
     )
 }
 
