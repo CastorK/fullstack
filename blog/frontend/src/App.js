@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Loginform from './components/Loginform'
 import blogService from './services/blogs'
 import Blog from './components/Blog'
+import CreateBlog from './components/CreateBlog'
 
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
     window.localStorage.clear()
     setUser(null)
   }
+  
+  const addBlog = (blog) => {
+    setBlogs(blogs.concat(blog))
+  }
 
   return (
     <div>
@@ -33,6 +38,8 @@ function App() {
         ? <Loginform setUser={setUser}/> 
         : <div>
             <h3>Logged in as { user.username }<button onClick={handleLogout}>Logout</button></h3>
+            <CreateBlog addBlog={ addBlog }/>
+            <h3>List of blogs</h3>
             {blogs.map( b => <Blog key={b.id} blog={b} /> )}
           </div>
       }
