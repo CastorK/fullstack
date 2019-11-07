@@ -15,10 +15,6 @@ const Loginform = ({setUser}) => {
             setPassword('')
         } catch (exception) {
             console.log(exception)
-            // setErrorMessage('Invalid credentials')
-            // setTimeout(() => {
-            //     setErrorMessage(null)
-            // }, 5000)
         }
     }
 
