@@ -4,6 +4,7 @@ import blogService from './services/blogs'
 import Blog from './components/Blog'
 import CreateBlog from './components/CreateBlog'
 import Notification from './components/Notification'
+import Toggleable from './components/Toggleable'
 
 
 function App() {
@@ -48,7 +49,9 @@ function App() {
         ? <Loginform setUser={setUser} showNotification={showNotification}/> 
         : <div>
             <h3>Logged in as { user.username }<button onClick={handleLogout}>Logout</button></h3>
-            <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
+            <Toggleable buttonLabel="New note">
+              <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
+            </Toggleable>
             <h3>List of blogs</h3>
             {blogs.map( b => <Blog key={b.id} blog={b} /> )}
           </div>
