@@ -34,9 +34,17 @@ function App() {
     setBlogs(blogs.concat(blog))
   }
 
+  const increaseLikes = (id) => {
+    const newBlogs = blogs.map( blog => {
+      if (blog.id === id) blog.likes++
+      return blog
+    })
+    setBlogs(newBlogs)
+  }
+
   const toggleVisible = (id) => {
     const newBlogs = blogs.map( x => {
-      if (x.id === id) x['expanded'] = !x['expanded']
+      if (x.id === id) x.expanded = !x.expanded
       return x
     })
     setBlogs(newBlogs)
@@ -64,7 +72,7 @@ function App() {
               <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
             </Toggleable>
             <h3>List of blogs</h3>
-            {blogs.map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible}/> )}
+            {blogs.map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} /> )}
           </div>
       }
     </div>
