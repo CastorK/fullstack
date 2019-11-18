@@ -11,19 +11,19 @@ const getAll = async () => {
 }
 
 const createBlog = async (blogdata) => {
-  const config = { 'headers': {'Authorization': token}}
+  const config = { 'headers': { 'Authorization': token } }
   const response = await axios.post(baseUrl, blogdata, config)
   return response.data
 }
 
 const changeBlog = async (blogdata) => {
-  const config = { 'headers': {'Authorization': token}}
+  const config = { 'headers': { 'Authorization': token } }
   const response = await axios.put(`${baseUrl}/${blogdata.id}`, blogdata, config)
   return response.data
 }
 
 const deleteBlog = async (blogid) => {
-  const config = { 'headers': {'Authorization': token}}
+  const config = { 'headers': { 'Authorization': token } }
   await axios.delete(`${baseUrl}/${blogid}`, config)
 }
 export default {

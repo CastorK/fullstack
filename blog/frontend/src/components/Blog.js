@@ -3,7 +3,7 @@ import BlogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
 const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
-  const expanded = {display: blog.expanded ? '' : 'none'}
+  const expanded = { display: blog.expanded ? '' : 'none' }
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -11,7 +11,7 @@ const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  const showDeleteButton = { display: blog.user.username === user.username ? '' : 'none'}
+  const showDeleteButton = { display: blog.user.username === user.username ? '' : 'none' }
 
   const handleLike = async () => {
     const newBlog = Object.assign({}, blog)
@@ -22,7 +22,7 @@ const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
       const response = await BlogService.changeBlog(newBlog)
       increaseLikes(response.id)
     } catch (error) {
-      console.log("Lol nope")
+      console.log('Lol nope')
     }
   }
 
@@ -43,10 +43,10 @@ const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
         {blog.title} {blog.author}
       </div>
       <div style={expanded}>
-          <a href={blog.url}>{blog.url}</a><br />
-          {blog.likes} likes <button onClick={() => handleLike()}>like</button><br />
-          Added by {blog.user.name}<br />
-          <button style={showDeleteButton} onClick={() => handleDelete()}>remove</button>
+        <a href={blog.url}>{blog.url}</a><br />
+        {blog.likes} likes <button onClick={() => handleLike()}>like</button><br />
+        Added by {blog.user.name}<br />
+        <button style={showDeleteButton} onClick={() => handleDelete()}>remove</button>
       </div>
     </div>
   )

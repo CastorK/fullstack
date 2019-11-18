@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Notification = ({notification}) => {
+const Notification = ({ notification }) => {
   if ( !notification.msg ) {
     return null
   }
@@ -14,9 +14,9 @@ const Notification = ({notification}) => {
     marginBottom: 10
   }
   switch (notification.type) {
-    case 'success': notificationStyle.color = 'green'; break;
-    case 'fail': notificationStyle.color = 'red'; break;
-    default: notificationStyle.color = 'blue'; break;
+  case 'success': notificationStyle.color = 'green'; break
+  case 'fail': notificationStyle.color = 'red'; break
+  default: notificationStyle.color = 'blue'; break
   }
 
   return (

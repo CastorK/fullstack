@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Loginform from './components/Loginform'
 import blogService from './services/blogs'
 import Blog from './components/Blog'
@@ -10,7 +10,7 @@ import Toggleable from './components/Toggleable'
 function App() {
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
-  const [notification, setNotification] = useState({'msg': '', 'type': ''})
+  const [notification, setNotification] = useState({ 'msg': '', 'type': '' })
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('blogUser')
@@ -25,11 +25,11 @@ function App() {
     })
   }, [])
 
-  const handleLogout = (event) => {
+  const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
   }
-  
+
   const addBlog = (blog) => {
     setBlogs(blogs.concat(blog))
   }
@@ -55,9 +55,9 @@ function App() {
   }
 
   const showNotification = (msg, type) => {
-    setNotification({'msg': msg, 'type': type})
+    setNotification({ 'msg': msg, 'type': type })
     setTimeout(() => {
-      setNotification({'msg': '', 'type': ''})
+      setNotification({ 'msg': '', 'type': '' })
     }, 3000)
   }
 
@@ -69,8 +69,8 @@ function App() {
       </div>
       {
         user === null
-        ? <Loginform setUser={setUser} showNotification={showNotification}/> 
-        : <div>
+          ? <Loginform setUser={setUser} showNotification={showNotification}/>
+          : <div>
             <h3>Logged in as { user.username }<button onClick={handleLogout}>Logout</button></h3>
             <Toggleable buttonLabel="New note">
               <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
@@ -78,11 +78,11 @@ function App() {
             <h3>List of blogs</h3>
             {blogs
               .sort( (x,y) => y.likes-x.likes )
-              .map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} deleteBlog user={user}/> )}
+              .map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} deleteBlog={deleteBlog} user={user}/> )}
           </div>
       }
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
