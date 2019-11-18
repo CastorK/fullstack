@@ -11,6 +11,7 @@ const CreateBlog = ({addBlog, showNotification}) => {
 
         try {
             const newBlog = await BlogService.createBlog({'title': title, 'author': author, 'url': url})
+            newBlog['expanded'] = false
             setTitle('')
             setAuthor('')
             setUrl('')

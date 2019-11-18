@@ -10,7 +10,7 @@ import Toggleable from './components/Toggleable'
 function App() {
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
-  const [ notification, setNotification ] = useState({'msg': '', 'type': ''})
+  const [notification, setNotification] = useState({'msg': '', 'type': ''})
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('blogUser')
@@ -19,7 +19,10 @@ function App() {
       setUser(user)
       blogService.setToken(user.token)
     }
-    blogService.getAll().then(data => setBlogs(data))
+    blogService.getAll().then(data => {
+      data.map(x => x['expanded'] = false)
+      setBlogs(data)
+    })
   }, [])
 
   const handleLogout = (event) => {
@@ -29,6 +32,14 @@ function App() {
   
   const addBlog = (blog) => {
     setBlogs(blogs.concat(blog))
+  }
+
+  const toggleVisible = (id) => {
+    const newBlogs = blogs.map( x => {
+      if (x.id === id) x['expanded'] = !x['expanded']
+      return x
+    })
+    setBlogs(newBlogs)
   }
 
   const showNotification = (msg, type) => {
@@ -53,7 +64,7 @@ function App() {
               <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
             </Toggleable>
             <h3>List of blogs</h3>
-            {blogs.map( b => <Blog key={b.id} blog={b} /> )}
+            {blogs.map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible}/> )}
           </div>
       }
     </div>
