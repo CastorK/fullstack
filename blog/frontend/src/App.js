@@ -42,6 +42,10 @@ function App() {
     setBlogs(newBlogs)
   }
 
+  const deleteBlog = (id) => {
+    setBlogs(blogs.filter(x => x.id !== id))
+  }
+
   const toggleVisible = (id) => {
     const newBlogs = blogs.map( x => {
       if (x.id === id) x.expanded = !x.expanded
@@ -72,7 +76,9 @@ function App() {
               <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
             </Toggleable>
             <h3>List of blogs</h3>
-            {blogs.sort( (x,y) => y.likes-x.likes ).map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} /> )}
+            {blogs
+              .sort( (x,y) => y.likes-x.likes )
+              .map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} deleteBlog={deleteBlog} user={user}/> )}
           </div>
       }
     </div>
