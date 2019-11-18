@@ -78,7 +78,7 @@ function App() {
             <h3>List of blogs</h3>
             {blogs
               .sort( (x,y) => y.likes-x.likes )
-              .map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} deleteBlog={deleteBlog} user={user}/> )}
+              .map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} deleteBlog user={user}/> )}
           </div>
       }
     </div>

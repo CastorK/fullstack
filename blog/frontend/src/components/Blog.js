@@ -1,5 +1,6 @@
 import React from 'react'
 import BlogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
   const expanded = {display: blog.expanded ? '' : 'none'}
@@ -49,6 +50,14 @@ const Blog = ({ blog, toggleVisible, increaseLikes, deleteBlog, user }) => {
       </div>
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  toggleVisible: PropTypes.func.isRequired,
+  increaseLikes: PropTypes.func.isRequired,
+  deleteBlog: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default Blog
