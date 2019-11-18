@@ -72,7 +72,7 @@ function App() {
               <CreateBlog addBlog={ addBlog } showNotification={showNotification}/>
             </Toggleable>
             <h3>List of blogs</h3>
-            {blogs.map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} /> )}
+            {blogs.sort( (x,y) => y.likes-x.likes ).map( b => <Blog key={b.id} blog={b} toggleVisible={toggleVisible} increaseLikes={increaseLikes} /> )}
           </div>
       }
     </div>
